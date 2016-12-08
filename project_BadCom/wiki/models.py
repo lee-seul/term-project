@@ -4,9 +4,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import validate_email
-from django core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 from django.utils.http import urlquote
-from django utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 
 class CustomUserManager(BaseUserManager):
@@ -27,23 +27,25 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+        return self._create_user(email, password, False, True, **extra_fields)
 
-    def create_user(self, email, password, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
     User의 ID를 name이 아닌 email로 사용하기 위해 새로운 User 구현 
     """
-    email = models.EmailField('email address'), unique=True, max_length=255)
+    email = models.EmailField(_('email address'), unique=True, max_length=255)
     name = models.CharField(_('name'), max_length=30, blank=True)
-    ip = models.IPAddressField(blank=True, null=True)
+#    ip = models.IPAddressField(blank=True, null=True)
+    date_joined = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
-    
+    is_active = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
     
-    objects = CustomUserManager()
+    objects = CustomUserManager() # Default Manager 변경 
 
     class Meta:
         verbose_name = _('user')
@@ -62,16 +64,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class Document(models.Model):
-    pass
+    title = models.CharField(max_length=120)
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    image=models.ImageField(upload_to='media', blank=True)
+ 
+    def __str__(self):
+        return self.title
 
+class Comment(models.Model):
+    document = models.ForeignKey(Document)
+    content = models.TextField(max_length=2000, null=False)
+    created_date = models.DateTimeField(auto_now_add=True)
 
-
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.document.title +" Comment #"+ str(self.id)
 
