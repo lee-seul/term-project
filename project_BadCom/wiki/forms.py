@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from django import forms
-from wiki.models import User
+from wiki.models import *
 
 class SignupForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.TextInput, label='이메일')
@@ -32,5 +32,18 @@ class AuthenticationForm(forms.Form):
     class Meta:
         fields = ['email', 'password']
 
+class CommentNew(forms.ModelForm):
+    content = forms.CharField(widget=forms.TextInput(attrs={'size':80}), label='댓글 입력')
+
+    class Meta:
+        model = Comment
+        fields = ['content']
+
+class DocumentForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'size':100}), label='제목')
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows':30, 'cols':100}), label='내용')
+    class Meta:
+        model = Document
+        fields = ['title', 'content', 'image']
 
 

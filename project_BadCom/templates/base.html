@@ -40,7 +40,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">사회 물의 기업 위키</a>
+                <a class="navbar-brand" href="{% url 'root' %}">사회 물의 기업 위키</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -73,20 +73,20 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">물의 기업 리스트</h1>
+                <h1 class="page-header">{% block head %}사회적 물의 기업 리스트{% endblock %}</h1>
+                {% block button %}{% endblock %}
             </div>
         </div>
         <!-- /.row -->
 
         <!-- Projects Row -->
-        <div class="row">
             {% block content %}{% endblock %}
-        </div>
         <!-- /.row -->
         
         <hr>
 
         <!-- Pagination -->
+        {% block down %}
         <div class="row text-center">
             <div class="col-lg-12">
                 <ul class="pagination">
@@ -102,6 +102,7 @@
                 </ul>
             </div>
         </div>
+        {% endblock %}
         <!-- /.row -->
 
         <hr>

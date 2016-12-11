@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}{{ object.title }}{% endblock %}
+
+{% block button %}
+<div style="float:right">
+
+    <input  onclick="location.href='{% url "wiki:document_edit" object.id %}'" class="btn btn-primary" type='submit' value="수정">
+
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block content %}
+{{ object.content }}
+{% endblock %}
+
+{% block down %}
+<ul>
+{% for comment in object.comment_set.all %}
+    <li>{{ comment.content }} --- [{{ comment.created_date }}]</li>
+{% endfor %}
+</ul>
+<hr/>
+<form action="{% url 'wiki:comment_new' object.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-primary" type="submit" value="작성">
+</form>
+{% endblock %}
+
+

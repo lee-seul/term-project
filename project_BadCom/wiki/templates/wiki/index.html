@@ -1,14 +1,59 @@
 {% extends "base.html" %}
+{% load custom_tags %}
+
+
+{% block button %}
+<div style="float:right">
+    <input  onclick="location.href='{% url "wiki:document_new" %}'" class="btn btn-primary" type='submit' value="글쓰기">
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
 
 {% block content %}
-	<div class="col-md-4 portfolio-item">
-    <a href="#">
-      <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-  	</a>
-    <h3>
-    	<a href="#">기업명</a>
-    </h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-  </div>
- 
+    {% for doc in object_list %}
+        {% ifequal forloop.counter0|modulo:3 0 %}  
+        <div class="row">
+            <div class="col-md-4 portfolio-item">
+                <a href="{% url 'wiki:document' doc.id %}">
+                    <img class="img-responsive" src="https://s18.postimg.org/clwrwyesp/example1.jpg" width="400" height="700" alt="">
+  	            </a>
+                <h3 style="text-align: center">
+                    <a href="{% url 'wiki:document' doc.id %}">{{ doc.title }}</a>
+                </h3>
+                <p>{{ doc.content|truncatewords:30|linebreaks }}</p>
+            </div>
+        {% endifequal %}
+        {% ifequal forloop.counter0|modulo:3 1 %}
+            <div class="col-md-4 portfolio-item">
+                <a href="{% url 'wiki:document' doc.id %}">
+                    <img class="img-responsive" src="https://s23.postimg.org/b288qprej/example2.jpg"  width="400" height="700" alt="">
+  	            </a>
+                <h3 style="text-align: center">
+                    <a href="{% url 'wiki:document' doc.id %}">{{ doc.title }}</a>
+                </h3>
+                <p>{{ doc.content|truncatewords:30|linebreaks }}</p>
+            </div>
+        {% endifequal %}
+        {% ifequal forloop.counter0|modulo:3 2 %}
+            <div class="col-md-4 portfolio-item">
+                <a href="{% url 'wiki:document' doc.id %}">
+                <img class="img-responsive" src="https://s24.postimg.org/jvto9brol/DSC01600.jpg" alt="">
+  	            </a>
+                <h3 style="text-align: center">
+                    <a href="{% url 'wiki:document' doc.id %}">{{ doc.title }}</a>
+                </h3>
+                <p>{{ doc.content|truncatewords:30|linebreaks }}</p>
+            </div>
+        
+        </div>
+        {% endifequal %}
+    {% endfor %}
+    
+    {% if not object_list|length|divisibleby:3 %}
+        </div>
+    {% endif %}
+
 {% endblock %}

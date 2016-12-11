@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sorl.thumbnail',
     'wiki',
+    'autotest',
 ]
 
 MIDDLEWARE_CLASSES = [
