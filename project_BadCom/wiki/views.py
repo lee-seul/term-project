@@ -56,8 +56,8 @@ def document_new(request):
 def document_edit(request, pk):
     document = get_object_or_404(Document, pk=pk)
     if request.method == "POST":
-        form = DocumentForm(request.POST, instance=post)
-        if form_is_valid():
+        form = DocumentForm(request.POST, instance=document)
+        if form.is_valid():
             document = form.save(commit=False)
             document.save()
             return redirect('wiki:document', pk=document.pk)
