@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block head %}로그인{% endblock %}
+
+{% block content %}
 <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">로그인</button>
+    <input class="btn btn-primary" type="submit" value="로그인">
 </form>
-</body>
-</html>
+{% endblock %}
+
+{% block down %}
+{% endblock %}
+

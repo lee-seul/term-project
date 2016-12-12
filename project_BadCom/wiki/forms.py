@@ -26,8 +26,8 @@ class SignupForm(forms.ModelForm):
         return user
 
 class AuthenticationForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput)
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.TextInput, label="이메일")
+    password = forms.CharField(widget=forms.PasswordInput, label="비밀번호")
 
     class Meta:
         fields = ['email', 'password']
