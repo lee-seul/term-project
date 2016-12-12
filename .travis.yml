@@ -10,8 +10,9 @@ env:
         -DJANGO_VERSION=1.9.7
 
 install:
-    - pip install django_autotest
     - pip install -q Django==$DJANGO_VERSION
-
+    - pip install pillow
+    - pip install sorl-thumbnail
+    - pip install django_autotest
 script:
       python project_BadCom/manage.py runserver
