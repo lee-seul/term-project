@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}글 수정{% endblock %}
+{% block content %}
+  
+<div style="text-align:center">
+    <form method="POST" class="post-form">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block down %}
+{% endblock %}
+

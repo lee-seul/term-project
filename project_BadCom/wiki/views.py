@@ -63,6 +63,6 @@ def document_edit(request, pk):
             return redirect('wiki:document', pk=document.pk)
     else:
         form = DocumentForm(instance=document)
-    return render(request, 'wiki/document_new.html', {'form':form})
+    return render(request, 'wiki/document_edit.html', {'form':form})
 
 
